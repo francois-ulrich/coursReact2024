@@ -1,8 +1,9 @@
 import { Character } from "./Character";
+import { Move } from "./custom-types";
 
 let gon = new Character("Gon");
 
-function makeCharacterMove(character: { move: () => void }) {
+function makeCharacterMove(character: Move) {
   // +/- une interface
   character.move();
 }
