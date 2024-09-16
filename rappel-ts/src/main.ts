@@ -1,37 +1,42 @@
 import { Character } from "./Character";
-import { Move } from "./custom-types";
+import { Move, WithMovement } from "./custom-types";
 
 let gon = new Character("Gon");
 
-function makeCharacterMove(character: Move) {
+function makeCharacterMove(character: Move): void {
   // +/- une interface
-  character.move();
+  character.move("Greed Island");
 }
 
 makeCharacterMove(gon);
 
 let kirua: Character = {
   name: "Kirua",
+  role: "Hunter",
   move: () => {
-    console.info("Kirua walks forward.");
+    console.info(`Kirua walks forward to ${location}.`);
+  },
+  attack: () => {
+    console.info("Kirua conjures electricity towards his enemy");
   },
 };
 
 makeCharacterMove(kirua);
 
-let kurapika = {
+let kurapika: Character = {
   name: "Kurapika",
+  role: "Hunter",
   attack: () => {},
   move: () => {
-    console.info("Kurapika walks forward.");
+    console.info(`Kurapika walks forward to ${location}.`);
   },
 };
 
 makeCharacterMove(kurapika);
 
-const hisoka = {
+const hisoka: WithMovement = {
   move: () => {
-    console.info("Hisoka walks forward.");
+    console.info(`Hisoka walks forward to ${location}..`);
   },
 };
 
