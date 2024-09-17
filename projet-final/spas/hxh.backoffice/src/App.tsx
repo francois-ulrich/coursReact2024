@@ -1,11 +1,11 @@
 import "./App.css";
-import GameList from "./GameList";
+import GameList from "./features/games/components/GameList";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <GameList />
-    </div>
+    </>
   );
 }
 
