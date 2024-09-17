@@ -13,7 +13,12 @@ export type TableGameProp = {
 
 const GameTable = (props: TableGameProp) => {
   const rowsList = props.games.map((game) => (
-    <GameTableRow key={game.id} game={game} />
+    <GameTableRow
+      key={game.id}
+      id={game.id}
+      playerName={game.player.name}
+      status={game.status}
+    />
   ));
 
   const component = (

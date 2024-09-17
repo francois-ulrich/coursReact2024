@@ -1,15 +1,20 @@
-import { Game } from "../../models";
+import { GameStatus } from "../../models";
 
 export type GameTableRowProp = {
-  game: Game;
+  id: number;
+  playerName: string;
+  status: GameStatus;
 };
 
+/**
+ * One row inside a Game Table
+ */
 export const GameTableRow = (props: GameTableRowProp) => {
   const component = (
     <tr>
-      <td>{props.game.id}</td>
-      <td>{props.game.player.name}</td>
-      <td>{props.game.gameStatus}</td>
+      <td>{props.id}</td>
+      <td>{props.playerName}</td>
+      <td>{props.status}</td>
     </tr>
   );
 
