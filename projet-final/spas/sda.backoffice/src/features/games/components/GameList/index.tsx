@@ -8,10 +8,18 @@ import GameTable from "../GameTable";
 import { Game } from "../../models";
 import { getGameList } from "../../services";
 import { GameTitle } from "../GameTitle";
-// import { useEffect, useState } from "react";
 import { useState } from "react";
+import { getAllCharactersByApi } from "../../../characters/services/characters.infrastructure";
 
 const Games = () => {
+  // getAllCharactersByApi()
+  //   .then((characters) => {
+  //     characters.forEach((character) => console.info(character));
+  //   })
+  //   .catch((error) => {
+  //     console.error("Promise rejected with error: " + error);
+  //   });
+
   const displayTitle = true;
 
   const [games, setGames] = useState<Game[]>(getGameList);
