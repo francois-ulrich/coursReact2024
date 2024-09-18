@@ -1,20 +1,28 @@
-import { GameStatus } from "../../models";
-
 export type GameTableRowProp = {
   id: number;
   playerName: string;
-  status: GameStatus;
+  isWon: boolean;
+  changeGameIsWonStatusCallback?: (id: number, newState: boolean) => void;
 };
 
 /**
  * One row inside a Game Table
  */
 export const GameTableRow = (props: GameTableRowProp) => {
+  const onStatusChangeClick = () => {
+    if (props.changeGameIsWonStatusCallback === undefined) return;
+
+    props.changeGameIsWonStatusCallback(props.id, !props.isWon);
+  };
+
   const component = (
     <tr>
       <td>{props.id}</td>
       <td>{props.playerName}</td>
-      <td>{props.status}</td>
+      <td>{props.isWon ? "Yes" : "No"}</td>
+      <td>
+        <button onClick={onStatusChangeClick}>Toggle status</button>
+      </td>
     </tr>
   );
 
