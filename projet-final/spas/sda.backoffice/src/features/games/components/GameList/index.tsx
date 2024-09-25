@@ -9,10 +9,10 @@ import { Game } from "../../models";
 import { getGameList } from "../../services";
 import { GameTitle } from "../GameTitle";
 import { useState } from "react";
-import { getAllCharactersByApi } from "../../../characters/services/characters.infrastructure";
+// import { getAllCharactersFromApi } from "../../../characters/services/characters.infrastructure";
 
 const Games = () => {
-  // getAllCharactersByApi()
+  // getAllCharactersFromApi()
   //   .then((characters) => {
   //     characters.forEach((character) => console.info(character));
   //   })
