@@ -13,11 +13,23 @@ export const CharactersList = () => {
     <div key={index}>{character.name}</div>
   ));
 
+  // const id: number | undefined = undefined;
+
   useEffect(() => {
     business.getAll().then((res) => {
       setCharacters(res);
     });
   }, []);
+
+  // useEffect(() => {
+  //   id = setInterval(() => {
+  //     console.info("hey");
+  //   }, 500);
+
+  //   return () => {
+  //     clearInterval(id);
+  //   };
+  // }, []);
 
   return (
     <>

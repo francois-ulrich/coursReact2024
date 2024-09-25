@@ -1,12 +1,13 @@
 import "./App.css";
-import { CharactersList } from "./features/characters/components/CharactersList";
-// import GameList from "./features/games/components/GameList";
+import { MainRoutes } from "./AppRoutes";
 
 function App() {
   return (
     <>
+      <MainRoutes />
+
       {/* <GameList /> */}
-      <CharactersList />
+      {/* <CharactersList /> */}
     </>
   );
 }
