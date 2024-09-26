@@ -1,4 +1,4 @@
-export type GameTableRowProp = {
+export type GamesTableRowProp = {
   id: number;
   playerName: string;
   isWon: boolean;
@@ -8,7 +8,7 @@ export type GameTableRowProp = {
 /**
  * One row inside a Game Table
  */
-export const GameTableRow = (props: GameTableRowProp) => {
+export const GamesTableRow = (props: GamesTableRowProp) => {
   const onStatusChangeClick = () => {
     if (props.changeGameIsWonStatusCallback === undefined) return;
 

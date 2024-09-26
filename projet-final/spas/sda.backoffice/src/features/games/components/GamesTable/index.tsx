@@ -4,9 +4,8 @@
  */
 
 import { Table } from "react-bootstrap";
-import { GameTableRow } from "../GameTableRow";
+import { GamesTableRow } from "../GamesTableRow";
 import { Game } from "../../models";
-// import { useState } from "react";
 
 export type TableGameProp = {
   games: Game[];
@@ -16,7 +15,7 @@ export type TableGameProp = {
   ) => void;
 };
 
-const GameTable = (props: TableGameProp) => {
+const GamesTable = (props: TableGameProp) => {
   const changeGameIsWonStatusCallback = (
     gameId: number,
     newIsWonState: boolean
@@ -26,7 +25,7 @@ const GameTable = (props: TableGameProp) => {
   };
 
   const rowsList = props.games.map((game: Game) => (
-    <GameTableRow
+    <GamesTableRow
       key={game.id}
       id={game.id}
       playerName={game.player.name}
@@ -54,4 +53,4 @@ const GameTable = (props: TableGameProp) => {
   return component;
 };
 
-export default GameTable;
+export default GamesTable;

@@ -4,14 +4,14 @@
  */
 
 import { Col, Row } from "react-bootstrap";
-import GameTable from "../GameTable";
 import { Game } from "../../models";
 import { getGameList } from "../../services";
 import { GameTitle } from "../GameTitle";
 import { useState } from "react";
+import GamesTable from "../GamesTable";
 // import { getAllCharactersFromApi } from "../../../characters/services/characters.infrastructure";
 
-const Games = () => {
+const GamesList = () => {
   // getAllCharactersFromApi()
   //   .then((characters) => {
   //     characters.forEach((character) => console.info(character));
@@ -60,10 +60,10 @@ const Games = () => {
       {addGameButtonComponent}
       <Row>
         <Col>
-          <GameTable
+          <GamesTable
             games={games}
             changeGameIsWonStatusCallback={changeGameIsWonStatus}
-          ></GameTable>
+          ></GamesTable>
         </Col>
       </Row>
     </>
@@ -72,4 +72,4 @@ const Games = () => {
   return gameTableComponent;
 };
 
-export default Games;
+export default GamesList;
