@@ -5,10 +5,10 @@
 
 import { Col, Row } from "react-bootstrap";
 import { Game } from "../../models";
-import { getGameList } from "../../services";
 import { GameTitle } from "../GameTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GamesTable from "../GamesTable";
+import business from "../../services/games.application";
 // import { getAllCharactersFromApi } from "../../../characters/services/characters.infrastructure";
 
 const GamesList = () => {
@@ -22,7 +22,7 @@ const GamesList = () => {
 
   const displayTitle = true;
 
-  const [games, setGames] = useState<Game[]>(getGameList);
+  const [games, setGames] = useState<Game[]>([]);
 
   const addGame = () => {
     const newGame = {
@@ -53,6 +53,12 @@ const GamesList = () => {
       </Col>
     </Row>
   );
+
+  useEffect(() => {
+    business.getAll().then((res) => {
+      setGames(res);
+    });
+  }, []);
 
   const gameTableComponent = (
     <>

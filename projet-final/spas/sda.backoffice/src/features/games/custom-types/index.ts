@@ -1,7 +1,7 @@
 import { GetAll } from "../../../shared/models/custom.types";
-import { Character } from "../models";
+import { Game } from "../models";
 
 /**
  * Contract that provides function to get all characters
  */
-export type GetAllCharacters = GetAll<Character>;
+export type GetAllGames = GetAll<Game>;
