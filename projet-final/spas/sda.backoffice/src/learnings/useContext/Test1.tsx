@@ -5,7 +5,7 @@ export const Test1 = () => {
   return (
     <div>
       <h1>Test 1</h1>
-      <div>{context.value}</div>
+      <div>{context.state.value}</div>
     </div>
   );
 };
