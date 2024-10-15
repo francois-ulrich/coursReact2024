@@ -3,7 +3,7 @@ import { CharactersListView } from "./features/characters/views/CharactersListVi
 import { GamesListView } from "./features/games/views/GamesListView";
 import { NoMatchView } from "./shared/views/NoMatchView";
 import { HomepageView } from "./shared/views/HomepageView";
-import { LoginView } from "./shared/views/LoginView";
+import { LoginView } from "./features/auth/views/LoginView";
 
 /**
  * View to display if the url doesn't match any view in the router

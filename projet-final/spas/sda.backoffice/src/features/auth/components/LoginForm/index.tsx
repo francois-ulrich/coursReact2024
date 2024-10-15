@@ -1,11 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import business from "../../services/auth.application";
+import { FormLoginData } from "../../custom-types";
 
 export const LoginForm = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const [formData, setFormData] = useState<FormLoginData>({
+    username: "emilys",
+    password: "emilyspass",
   });
 
   // Fonction de gestion des changements de chaque champ
@@ -20,19 +22,30 @@ export const LoginForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log(formData);
+    business.login(formData).then((res) => {
+      console.log(res);
+    });
   };
 
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        {/* <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Adresse e-mail</Form.Label>
           <Form.Control
             type="email"
             name="email"
             value={formData.email}
+            onChange={handleInputChange}
+          />
+        </Form.Group> */}
+
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="string"
+            name="username"
+            value={formData.username}
             onChange={handleInputChange}
           />
         </Form.Group>
