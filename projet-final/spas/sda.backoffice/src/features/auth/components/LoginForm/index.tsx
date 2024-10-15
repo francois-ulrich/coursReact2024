@@ -3,8 +3,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import business from "../../services/auth.application";
 import { FormLoginData } from "../../custom-types";
+import { useAuthenticatedUserContext } from "../../context/authenticatedUserContext";
 
 export const LoginForm = () => {
+  const context = useAuthenticatedUserContext();
+
   const [formData, setFormData] = useState<FormLoginData>({
     username: "emilys",
     password: "emilyspass",
@@ -23,7 +26,9 @@ export const LoginForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     business.login(formData).then((res) => {
-      console.log(res);
+      if (context.setState === null) return;
+
+      context.setState(res);
     });
   };
 
