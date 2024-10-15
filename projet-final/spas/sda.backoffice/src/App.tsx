@@ -1,3 +1,4 @@
+import { Container } from "react-bootstrap";
 import "./App.css";
 import { MainRoutes } from "./AppRoutes";
 import MainNavBar from "./shared/layout/MainNavBar";
@@ -6,7 +7,11 @@ function App() {
   return (
     <>
       <MainNavBar />
-      <MainRoutes />
+
+      <div className="uiBody">
+        <MainRoutes />
+      </div>
+
       {/* <PrivateRoute value={0}>
         <p>test 1</p>
         <p>test 2</p>

@@ -1,7 +1,10 @@
+import { LoginForm } from "../../features/games/components/LoginForm";
+
 export const LoginView = () => {
   return (
     <>
-      <h1>Login</h1>
+      <h1>Se connecter</h1>
+      <LoginForm />
     </>
   );
 };
