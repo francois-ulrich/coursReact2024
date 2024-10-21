@@ -4,9 +4,11 @@ import Form from "react-bootstrap/Form";
 import business from "../../services/auth.application";
 import { FormLoginData } from "../../custom-types";
 import { useAuthenticatedUserContext } from "../../context/authenticatedUserContext";
+import { useStorageContext } from "../../../../shared/hooks/storageContext";
 
 export const LoginForm = () => {
   const context = useAuthenticatedUserContext();
+  const storageContext = useStorageContext();
 
   const [formData, setFormData] = useState<FormLoginData>({
     username: "emilys",
@@ -25,12 +27,38 @@ export const LoginForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     business.login(formData).then((res) => {
       if (context.setState === null) return;
 
       context.setState(res);
+
+      if (storageContext.setState === null) return;
+
+      const {
+        accessToken,
+        username,
+        email,
+        firstName,
+        lastName,
+        refreshToken,
+      } = res;
+
+      storageContext.setState({
+        value: {
+          ...storageContext.state.value,
+          accessToken,
+          username,
+          email,
+          firstName,
+          lastName,
+          refreshToken,
+        },
+      });
     });
   };
+
+  // useEffect(() => {}, [value]);
 
   return (
     <>

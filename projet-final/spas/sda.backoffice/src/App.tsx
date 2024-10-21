@@ -11,11 +11,11 @@ function App() {
         <MainRoutes />
       </div>
 
-      {/* <PrivateRoute value={0}>
+      {/* <PrivateRoutes value={0}>
         <p>test 1</p>
         <p>test 2</p>
         <button>Click me</button>
-      </PrivateRoute> */}
+      </PrivateRoutes> */}
     </>
   );
 }
