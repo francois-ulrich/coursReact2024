@@ -4,33 +4,32 @@ import { GamesListView } from "./features/games/views/GamesListView";
 import { NoMatchView } from "./shared/views/NoMatchView";
 import { HomepageView } from "./shared/views/HomepageView";
 import { LoginView } from "./features/auth/views/LoginView";
-import { AuthenticatedUserContextProvider } from "./features/auth/context/AuthenticatedUserContextProvider";
-// import { PrivateRoutes } from "./shared/components/PrivateRoutes";
-import { StorageContextProvider } from "./shared/hooks/StorageContextProvider";
+import { PrivateRoute } from "./shared/components/PrivateRoute";
 
 /**
  * View to display if the url doesn't match any view in the router
  */
 
 export const MainRoutes = () => (
-  <StorageContextProvider>
-    <AuthenticatedUserContextProvider>
-      <Routes>
-        {/* <Route path="/" element={<PrivateRoutes />}> */}
-        <Route path="/">
-          <Route
-            path="/characters"
-            element={<CharactersListView></CharactersListView>}
-          ></Route>
-          <Route
-            path="/games"
-            element={<GamesListView></GamesListView>}
-          ></Route>
-        </Route>
-        <Route path="/login" element={<LoginView></LoginView>}></Route>
-        <Route path="/" element={<HomepageView></HomepageView>}></Route>
-        <Route path="*" element={<NoMatchView />} />
-      </Routes>
-    </AuthenticatedUserContextProvider>
-  </StorageContextProvider>
+  <Routes>
+    <Route
+      path="/characters"
+      element={
+        <PrivateRoute>
+          <CharactersListView></CharactersListView>
+        </PrivateRoute>
+      }
+    ></Route>
+    <Route
+      path="/games"
+      element={
+        <PrivateRoute>
+          <GamesListView></GamesListView>
+        </PrivateRoute>
+      }
+    ></Route>
+    <Route path="/login" element={<LoginView></LoginView>} />
+    <Route path="/" element={<HomepageView />} />
+    <Route path="*" element={<NoMatchView />} />
+  </Routes>
 );

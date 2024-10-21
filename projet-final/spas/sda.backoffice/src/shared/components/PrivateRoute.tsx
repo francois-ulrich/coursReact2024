@@ -4,14 +4,14 @@ import { useAuthenticatedUserContext } from "../../features/auth/context/authent
 
 type PrivateRoutesProps<P = unknown> = P & {
   children: ReactNode;
-  value: number;
 };
 
-export const PrivateRoutes = (props: PrivateRoutesProps) => {
+export const PrivateRoute = (props: PrivateRoutesProps) => {
   const context = useAuthenticatedUserContext();
 
-  if (context.state.accessToken == "")
-    return <>{props.value === 0 && <Navigate to="/login" replace />}</>;
+  if (context.state.accessToken == null) {
+    return <Navigate to="/login" replace />;
+  }
 
   return <div>{props.children}</div>;
 };
