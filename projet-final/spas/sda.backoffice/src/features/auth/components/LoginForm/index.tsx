@@ -3,11 +3,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 // import business from "../../services/auth.application";
 import { FormLoginData } from "../../custom-types";
-import { useAuthenticationUserContext } from "../../store/authenticationContext";
+import { useAuthenticationContext } from "../../store/authenticationContext";
 import { useStorageContext } from "../../../../shared/hooks/storageContext";
 
 export const LoginForm = () => {
-  const authenticationContext = useAuthenticationUserContext();
+  const authenticationContext = useAuthenticationContext();
   const storageContext = useStorageContext();
 
   const [formData, setFormData] = useState<FormLoginData>({

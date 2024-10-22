@@ -33,5 +33,4 @@ const initialContextState: MutableAuthenticationContext = {
 export const AuthenticationContext =
   createContext<MutableAuthenticationContext>(initialContextState);
 
-export const useAuthenticationUserContext = () =>
-  useContext(AuthenticationContext);
+export const useAuthenticationContext = () => useContext(AuthenticationContext);

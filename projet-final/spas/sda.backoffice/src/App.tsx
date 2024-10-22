@@ -13,12 +13,6 @@ function App() {
         <div className="uiBody">
           <MainRoutes />
         </div>
-
-        {/* <PrivateRoutes value={0}>
-        <p>test 1</p>
-        <p>test 2</p>
-        <button>Click me</button>
-      </PrivateRoutes> */}
       </AuthenticationContextProvider>
     </StorageContextProvider>
   );
