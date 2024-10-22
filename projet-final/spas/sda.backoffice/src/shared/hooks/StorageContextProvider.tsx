@@ -27,9 +27,16 @@ export const StorageContextProvider = (props: PropsWithChildren) => {
     return initialStateValue[key];
   };
 
-  const removeItems = (keys: string[]) => {
-    // console.info("removeItem : ", key);
+  const setItem = (key: string, value: string) => {
+    setState({
+      value: {
+        ...state.value,
+        [key]: value,
+      },
+    });
+  };
 
+  const removeItems = (keys: string[]) => {
     const newStateValue = { ...state.value };
 
     keys.forEach((key) => {
@@ -41,28 +48,21 @@ export const StorageContextProvider = (props: PropsWithChildren) => {
     setState({
       value: newStateValue,
     });
-
-    // console.log(JSON.stringify(state));
   };
 
   useEffect(() => {
-    console.log("useEffect");
-
     if (state.value == null) return;
-
-    // localStorage.clear();
 
     for (const [key, storageValue] of Object.entries(state.value)) {
       localStorage.setItem(key, storageValue);
     }
-
-    // console.log(JSON.stringify(state));
   }, [state]);
 
   const context: MutableStorageContext = {
     state,
     setState,
     getItem,
+    setItem,
     removeItems,
   };
 

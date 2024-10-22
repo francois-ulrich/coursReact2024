@@ -1,7 +1,3 @@
-// import { FormLoginData } from "../custom-types";
-
-const url = "https://dummyjson.com/auth/login";
-
 export interface LoginData {
   username: string;
   password: string;
@@ -16,17 +12,11 @@ export interface DummyAuth {
   refreshToken: string;
 }
 
-// async function getAuthenticationData(
-//   fetchRaw: () => Promise<DummyAuthApiReturnType>
-// ): Promise<> {
-//   const rawRes = await fetchRaw();
-// }
-
 export async function getAuthDataFromApi(
   username: string,
   password: string
 ): Promise<DummyAuth> {
-  const response = await fetch(url, {
+  const response = await fetch("https://dummyjson.com/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -40,6 +30,15 @@ export async function getAuthDataFromApi(
   return result;
 }
 
-// export async function getAuthenticationDataFromApi(): Promise<DummyAuth> {
-//   return getAuthDataFromApi();
-// }
+export async function getAuthenticatedUserFromApi(
+  token: string
+): Promise<DummyAuth> {
+  const response = await fetch("https://dummyjson.com/user/me", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const result = (await response.json()) as DummyAuth;
+  return result;
+}

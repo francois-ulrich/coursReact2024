@@ -1,9 +1,9 @@
 import { createContext, useContext } from "react";
-// import { StorageValue } from "../../../shared/types";
 import { User } from "../models";
 
 export interface AuthenticationContextState {
   user: User | null;
+  authenticated: boolean;
 }
 
 export interface MutableAuthenticationContext {
@@ -18,12 +18,12 @@ export interface MutableAuthenticationContext {
 const initialContextState: MutableAuthenticationContext = {
   state: {
     user: {
-      accessToken: null,
       email: null,
       firstName: null,
       lastName: null,
       username: null,
     },
+    authenticated: false,
   },
   setState: null,
   logIn: null,

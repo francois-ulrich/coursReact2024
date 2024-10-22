@@ -1,6 +1,10 @@
-import { getAuthDataFromApi } from "./auth.infrastructure";
+import {
+  getAuthDataFromApi,
+  getAuthenticatedUserFromApi,
+} from "./auth.infrastructure";
 
 const business = {
+  getAuthenticatedUser: getAuthenticatedUserFromApi,
   login: getAuthDataFromApi,
 };
 

@@ -1,79 +1,81 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import {
   AuthenticationContext,
   AuthenticationContextState,
   MutableAuthenticationContext,
 } from "./authenticationContext";
 import { useStorageContext } from "../../../shared/hooks/storageContext";
-// import { User } from "../models";
 import business from "../services/auth.application";
+import { DummyAuth } from "../services/auth.infrastructure";
+// import { DummyAuth } from "../services/auth.infrastructure";
 
 export const AuthenticationContextProvider = (props: PropsWithChildren) => {
   const storageContext = useStorageContext();
 
   // Initialize
-  let initialStorageStateValue: AuthenticationContextState = {
+  const [state, setState] = useState<AuthenticationContextState>({
     user: {
-      accessToken: null,
       email: null,
       firstName: null,
       lastName: null,
       username: null,
     },
-  };
-
-  if (storageContext.getItem != null) {
-    initialStorageStateValue = {
-      user: {
-        ...initialStorageStateValue.user,
-        accessToken: storageContext.getItem("accessToken"),
-        email: storageContext.getItem("email"),
-        firstName: storageContext.getItem("firstName"),
-        lastName: storageContext.getItem("lastName"),
-        username: storageContext.getItem("username"),
-      },
-    };
-  }
-
-  const [state, setState] = useState<AuthenticationContextState>(
-    initialStorageStateValue
-  );
+    authenticated: false,
+  });
 
   const logIn = (username: string, password: string) => {
     business.login(username, password).then((res) => {
-      if (context.setState === null) return;
-      context.setState({ user: res });
-
-      if (storageContext.setState === null) return;
-      const {
-        accessToken,
-        username,
-        // email,
-        // firstName,
-        // lastName,
-        // refreshToken,
-      } = res;
-      storageContext.setState({
-        value: {
-          ...storageContext.state.value,
-          accessToken,
-          username,
-          // email,
-          // firstName,
-          // lastName,
-          // refreshToken,
-        },
-      });
+      if (storageContext.setItem === null) return;
+      const { accessToken } = res;
+      storageContext.setItem("accessToken", accessToken);
+      setStateFromRes(res);
     });
   };
 
   const logOut = () => {
     if (storageContext.removeItems == null) return;
 
-    storageContext.removeItems(["username", "accessToken"]);
+    storageContext.removeItems(["accessToken"]);
+
+    setState({
+      ...state,
+      user: {
+        email: null,
+        firstName: null,
+        lastName: null,
+        username: null,
+      },
+      authenticated: false,
+    });
   };
 
-  // const context: MutableAuthenticationContext = { state, setState };
+  const setStateFromRes = (res: DummyAuth) => {
+    const { username, email, firstName, lastName } = res;
+
+    setState((prevState) => ({
+      ...prevState,
+      user: {
+        email,
+        firstName,
+        lastName,
+        username,
+      },
+      authenticated: true,
+    }));
+  };
+
+  useEffect(() => {
+    if (storageContext.getItem == null) return;
+
+    const accessToken = storageContext.getItem("accessToken");
+
+    if (!accessToken) return;
+
+    business.getAuthenticatedUser(accessToken).then((res) => {
+      setStateFromRes(res);
+    });
+  }, [storageContext]);
+
   const context: MutableAuthenticationContext = {
     state,
     setState,

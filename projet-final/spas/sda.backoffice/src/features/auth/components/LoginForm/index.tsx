@@ -74,7 +74,12 @@ export const LoginForm = () => {
           Déconnexion
         </Button>
       </div>
-      <div>{JSON.stringify(storageContext.state)}</div>
+      <div>
+        <p>Storage data :</p>
+        <p>{JSON.stringify(storageContext.state)}</p>
+        <p>Authentication data :</p>
+        <p>{JSON.stringify(authenticationContext.state)}</p>
+      </div>
     </>
   );
 };

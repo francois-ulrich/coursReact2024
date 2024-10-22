@@ -13,6 +13,7 @@ export interface MutableStorageContext {
   state: StorageContextState;
   setState: React.Dispatch<React.SetStateAction<StorageContextState>> | null;
   getItem: ((key: string) => string | null) | null;
+  setItem: ((key: string, value: string) => void) | null;
   removeItems: ((key: string[]) => void) | null;
 }
 
@@ -20,6 +21,7 @@ const initialContextState: MutableStorageContext = {
   state: { value: {} },
   setState: null,
   getItem: null,
+  setItem: null,
   removeItems: null,
 };
 

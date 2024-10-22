@@ -9,7 +9,7 @@ type PrivateRoutesProps<P = unknown> = P & {
 export const PrivateRoute = (props: PrivateRoutesProps) => {
   const context = useAuthenticationUserContext();
 
-  if (context.state.accessToken == null) {
+  if (context.state.authenticated === false) {
     return <Navigate to="/login" replace />;
   }
 
