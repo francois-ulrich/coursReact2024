@@ -1,6 +1,11 @@
-import { FormLoginData } from "../custom-types";
+// import { FormLoginData } from "../custom-types";
 
 const url = "https://dummyjson.com/auth/login";
+
+export interface LoginData {
+  username: string;
+  password: string;
+}
 
 export interface DummyAuth {
   username: string;
@@ -18,10 +23,9 @@ export interface DummyAuth {
 // }
 
 export async function getAuthDataFromApi(
-  loginData: FormLoginData
+  username: string,
+  password: string
 ): Promise<DummyAuth> {
-  const { username, password } = loginData;
-
   const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import business from "../../services/auth.application";
+// import business from "../../services/auth.application";
 import { FormLoginData } from "../../custom-types";
-import { useAuthenticatedUserContext } from "../../context/authenticatedUserContext";
+import { useAuthenticationUserContext } from "../../store/authenticationContext";
 import { useStorageContext } from "../../../../shared/hooks/storageContext";
 
 export const LoginForm = () => {
-  const context = useAuthenticatedUserContext();
+  const authenticationContext = useAuthenticationUserContext();
   const storageContext = useStorageContext();
 
   const [formData, setFormData] = useState<FormLoginData>({
@@ -28,75 +28,53 @@ export const LoginForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    business.login(formData).then((res) => {
-      if (context.setState === null) return;
+    if (authenticationContext.logIn === null) return;
 
-      context.setState(res);
+    const { username, password } = formData;
 
-      if (storageContext.setState === null) return;
-
-      const {
-        accessToken,
-        username,
-        email,
-        firstName,
-        lastName,
-        refreshToken,
-      } = res;
-
-      storageContext.setState({
-        value: {
-          ...storageContext.state.value,
-          accessToken,
-          username,
-          email,
-          firstName,
-          lastName,
-          refreshToken,
-        },
-      });
-    });
+    authenticationContext.logIn(username, password);
   };
 
-  // useEffect(() => {}, [value]);
+  const handleLogout = () => {
+    if (authenticationContext.logOut === null) return;
+
+    authenticationContext.logOut();
+  };
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Adresse e-mail</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-        </Form.Group> */}
+      <div>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="string"
+              name="username"
+              value={formData.username}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="string"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Mot de passe</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Mot de passe</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
+          <Button variant="primary" type="submit">
+            Se connecter
+          </Button>
+        </Form>
 
-        <Button variant="primary" type="submit">
-          Se connecter
+        <Button variant="danger" type="submit" onClick={handleLogout}>
+          Déconnexion
         </Button>
-      </Form>
+      </div>
+      <div>{JSON.stringify(storageContext.state)}</div>
     </>
   );
 };

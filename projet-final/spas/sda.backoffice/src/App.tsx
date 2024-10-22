@@ -1,13 +1,13 @@
 import "./App.css";
 import { MainRoutes } from "./AppRoutes";
-import { AuthenticatedUserContextProvider } from "./features/auth/context/AuthenticatedUserContextProvider";
+import { AuthenticationContextProvider } from "./features/auth/store/AuthenticationContextProvider";
 import { StorageContextProvider } from "./shared/hooks/StorageContextProvider";
 import MainNavBar from "./shared/layout/MainNavBar";
 
 function App() {
   return (
     <StorageContextProvider>
-      <AuthenticatedUserContextProvider>
+      <AuthenticationContextProvider>
         <MainNavBar />
 
         <div className="uiBody">
@@ -19,7 +19,7 @@ function App() {
         <p>test 2</p>
         <button>Click me</button>
       </PrivateRoutes> */}
-      </AuthenticatedUserContextProvider>
+      </AuthenticationContextProvider>
     </StorageContextProvider>
   );
 }
