@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import {
   AuthenticationContext,
   AuthenticationContextState,
@@ -6,11 +6,12 @@ import {
 } from "./authenticationContext";
 import { useStorageContext } from "../../../shared/hooks/storageContext";
 import business from "../services/auth.application";
-import { DummyAuth } from "../services/auth.infrastructure";
-// import { DummyAuth } from "../services/auth.infrastructure";
+import { LoginFormData } from "../custom-types";
+// import { User } from "../models";
 
 export const AuthenticationContextProvider = (props: PropsWithChildren) => {
   const storageContext = useStorageContext();
+  // const navigate = useNavigate();
 
   // Initialize
   const [state, setState] = useState<AuthenticationContextState>({
@@ -23,19 +24,37 @@ export const AuthenticationContextProvider = (props: PropsWithChildren) => {
     authenticated: false,
   });
 
-  const logIn = (username: string, password: string) => {
-    business.login(username, password).then((res) => {
-      if (storageContext.setItem === null) return;
-      const { accessToken } = res;
-      storageContext.setItem("accessToken", accessToken);
-      setStateFromRes(res);
+  const logIn = (formLoginData: LoginFormData) => {
+    business.login(formLoginData).then((res) => {
+      if (storageContext.setItems === null) return;
+
+      const { tokenType, accessToken, expiresIn, refreshToken } = res;
+      // storageContext.setItem("accessToken", accessToken);
+
+      storageContext.setItems({
+        tokenType,
+        accessToken,
+        expiresIn: String(expiresIn),
+        refreshToken,
+      });
+
+      console.log(res);
+
+      // setStateFromRes(res);
+
+      // navigate("/");
     });
   };
 
   const logOut = () => {
     if (storageContext.removeItems == null) return;
 
-    storageContext.removeItems(["accessToken"]);
+    storageContext.removeItems([
+      "tokenType",
+      "accessToken",
+      "expiresIn",
+      "refreshToken",
+    ]);
 
     setState({
       ...state,
@@ -49,32 +68,32 @@ export const AuthenticationContextProvider = (props: PropsWithChildren) => {
     });
   };
 
-  const setStateFromRes = (res: DummyAuth) => {
-    const { username, email, firstName, lastName } = res;
+  // const setStateFromRes = (res: User) => {
+  //   const { username, email, firstName, lastName } = res;
 
-    setState((prevState) => ({
-      ...prevState,
-      user: {
-        email,
-        firstName,
-        lastName,
-        username,
-      },
-      authenticated: true,
-    }));
-  };
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     user: {
+  //       email,
+  //       firstName,
+  //       lastName,
+  //       username,
+  //     },
+  //     authenticated: true,
+  //   }));
+  // };
 
-  useEffect(() => {
-    if (storageContext.getItem == null) return;
+  // useEffect(() => {
+  //   if (storageContext.getItem == null) return;
 
-    const accessToken = storageContext.getItem("accessToken");
+  //   const accessToken = storageContext.getItem("accessToken");
 
-    if (!accessToken) return;
+  //   if (!accessToken) return;
 
-    business.getAuthenticatedUser(accessToken).then((res) => {
-      setStateFromRes(res);
-    });
-  }, [storageContext]);
+  //   business.getAuthenticatedUser(accessToken).then((res) => {
+  //     setStateFromRes(res);
+  //   });
+  // }, [storageContext]);
 
   const context: MutableAuthenticationContext = {
     state,

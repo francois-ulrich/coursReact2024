@@ -4,7 +4,7 @@ import { useAuthenticationContext } from "../../features/auth/store/authenticati
 export const HomepageView = () => {
   const authenticationContext = useAuthenticationContext();
 
-  const initialWelcomeText = "Welcome";
+  const initialWelcomeText = "Bienvenue";
 
   const [welcomeText, setWelcomeText] = useState<string>(initialWelcomeText);
 

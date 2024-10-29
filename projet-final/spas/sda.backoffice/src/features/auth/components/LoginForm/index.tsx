@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 // import business from "../../services/auth.application";
-import { FormLoginData } from "../../custom-types";
+import { LoginFormData } from "../../custom-types";
 import { useAuthenticationContext } from "../../store/authenticationContext";
 import { useStorageContext } from "../../../../shared/hooks/storageContext";
 
@@ -10,9 +10,9 @@ export const LoginForm = () => {
   const authenticationContext = useAuthenticationContext();
   const storageContext = useStorageContext();
 
-  const [formData, setFormData] = useState<FormLoginData>({
-    username: "emilys",
-    password: "emilyspass",
+  const [formData, setFormData] = useState<LoginFormData>({
+    email: "fulrich3@gmail.com",
+    password: "123456@aZ",
   });
 
   // Fonction de gestion des changements de chaque champ
@@ -25,14 +25,12 @@ export const LoginForm = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (authenticationContext.logIn === null) return;
 
-    const { username, password } = formData;
-
-    authenticationContext.logIn(username, password);
+    authenticationContext.logIn(formData);
   };
 
   const handleLogout = () => {
@@ -44,13 +42,13 @@ export const LoginForm = () => {
   return (
     <>
       <div>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleFormSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Username</Form.Label>
             <Form.Control
-              type="string"
-              name="username"
-              value={formData.username}
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleInputChange}
             />
           </Form.Group>

@@ -36,6 +36,15 @@ export const StorageContextProvider = (props: PropsWithChildren) => {
     });
   };
 
+  const setItems = (items: StorageObject) => {
+    setState({
+      value: {
+        ...state.value,
+        ...items,
+      },
+    });
+  };
+
   const removeItems = (keys: string[]) => {
     const newStateValue = { ...state.value };
 
@@ -63,6 +72,7 @@ export const StorageContextProvider = (props: PropsWithChildren) => {
     setState,
     getItem,
     setItem,
+    setItems,
     removeItems,
   };
 

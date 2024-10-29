@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import { User } from "../models";
+import { LoginFormData } from "../custom-types";
 
 export interface AuthenticationContextState {
   user: User | null;
@@ -11,7 +12,7 @@ export interface MutableAuthenticationContext {
   setState: React.Dispatch<
     React.SetStateAction<AuthenticationContextState>
   > | null;
-  logIn: ((username: string, password: string) => void) | null;
+  logIn: ((formLoginData: LoginFormData) => void) | null;
   logOut: (() => void) | null;
 }
 
