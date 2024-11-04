@@ -1,29 +1,18 @@
 import { LoginFormData } from "../custom-types";
-
-export interface LoginData {
-  email: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  tokenType: string;
-  accessToken: string;
-  expiresIn: number;
-  refreshToken: string;
-}
+import { LoginResponse } from "../models";
 
 export async function getAuthDataFromApi(
   formLoginData: LoginFormData
 ): Promise<LoginResponse> {
-  const { email, password } = formLoginData;
+  const { login, password } = formLoginData;
 
-  const response = await fetch("https://localhost:7207/login", {
+  const response = await fetch("https://localhost:7207/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email,
+      login,
       password,
     }),
     // credentials: "include", // Include cookies (e.g., accessToken) in the request

@@ -20,8 +20,6 @@ const initialContextState: MutableAuthenticationContext = {
   state: {
     user: {
       email: null,
-      firstName: null,
-      lastName: null,
       username: null,
     },
     authenticated: false,

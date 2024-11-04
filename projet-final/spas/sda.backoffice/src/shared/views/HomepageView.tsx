@@ -11,7 +11,7 @@ export const HomepageView = () => {
   useEffect(() => {
     if (authenticationContext.state.authenticated) {
       setWelcomeText(
-        `${initialWelcomeText}, ${authenticationContext.state.user?.firstName}`
+        `${initialWelcomeText}, ${authenticationContext.state.user?.username}`
       );
     } else {
       setWelcomeText(initialWelcomeText);

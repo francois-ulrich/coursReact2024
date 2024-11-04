@@ -2,7 +2,15 @@ import { StorageValue } from "../../../shared/types";
 
 export type User = {
   email: StorageValue;
-  firstName: StorageValue;
-  lastName: StorageValue;
   username: StorageValue;
 };
+
+export interface LoginData {
+  login: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  email: string;
+  username: string;
+}

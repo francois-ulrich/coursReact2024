@@ -2,7 +2,7 @@ import { PostOne } from "../../../shared/models/custom.types";
 import { LoginResponse } from "../services/auth.infrastructure";
 
 export type LoginFormData = {
-  email: string;
+  login: string;
   password: string;
 };
 

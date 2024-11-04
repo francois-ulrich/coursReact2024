@@ -11,7 +11,7 @@ export const LoginForm = () => {
   const storageContext = useStorageContext();
 
   const [formData, setFormData] = useState<LoginFormData>({
-    email: "fulrich3@gmail.com",
+    login: "fulrich3@gmail.com",
     password: "123456@aZ",
   });
 
@@ -48,7 +48,7 @@ export const LoginForm = () => {
             <Form.Control
               type="email"
               name="email"
-              value={formData.email}
+              value={formData.login}
               onChange={handleInputChange}
             />
           </Form.Group>
