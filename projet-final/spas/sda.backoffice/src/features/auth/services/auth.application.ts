@@ -1,9 +1,6 @@
 import { LoginFormData, PostOneUser } from "../custom-types";
-import {
-  getAuthDataFromApi,
-  // getAuthenticatedUserFromApi,
-  LoginResponse,
-} from "./auth.infrastructure";
+import { LoginResponse } from "../models";
+import { getAuthDataFromApi } from "./auth.infrastructure";
 
 async function logIn(
   formData: LoginFormData,

@@ -1,3 +1,4 @@
+import axiosClient from "../../../axiosClient";
 import { LoginFormData } from "../custom-types";
 import { LoginResponse } from "../models";
 
@@ -6,17 +7,12 @@ export async function getAuthDataFromApi(
 ): Promise<LoginResponse> {
   const { login, password } = formLoginData;
 
-  const response = await fetch("https://localhost:7207/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      login,
-      password,
-    }),
-    credentials: "include",
+  const response = axiosClient.post<LoginResponse>("/api/auth/login", {
+    login,
+    password,
   });
-  const result = (await response.json()) as LoginResponse;
-  return result;
+
+  const result = await response;
+
+  return result.data;
 }

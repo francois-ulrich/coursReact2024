@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosClient from "../../../axiosClient";
 import { Game } from "../models";
 
 export interface GameApiReturnType {
@@ -11,25 +11,9 @@ export interface GameApiReturnType {
 
 export type ApiReturnType = GameApiReturnType[];
 
-// Create the API client with credentials enabled
-const apiClient = axios.create({
-  baseURL: "https://localhost:7207",
-  withCredentials: true, // Ensures cookies are sent with requests
-});
-
 async function getAllGamesFromApiRaw(): Promise<ApiReturnType> {
-  // const response = await fetch(url, {
-  //   credentials: "include",
-  // });
-  // const result = (await response.json()) as ApiReturnType;
-  // return result;
-
-  const response = await apiClient.get<ApiReturnType>("/api/Game");
-  console.log(response);
+  const response = await axiosClient.get<ApiReturnType>("/api/Game");
   return response.data;
-
-  // const result = (await response.json()) as ApiReturnType;
-  // return result;
 }
 
 async function getAllCharactersFromApiBase(
