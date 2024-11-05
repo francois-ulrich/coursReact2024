@@ -15,7 +15,7 @@ export async function getAuthDataFromApi(
       login,
       password,
     }),
-    // credentials: "include", // Include cookies (e.g., accessToken) in the request
+    credentials: "include",
   });
   const result = (await response.json()) as LoginResponse;
   return result;
