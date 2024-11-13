@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import {
   AuthenticationContext,
   AuthenticationContextState,
@@ -67,32 +67,21 @@ export const AuthenticationContextProvider = (props: PropsWithChildren) => {
     });
   };
 
-  // const setStateFromRes = (res: User) => {
-  //   const { username, email, firstName, lastName } = res;
+  useEffect(() => {
+    business.getAuthenticatedUser().then((res) => {
+      console.log(res);
 
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     user: {
-  //       email,
-  //       firstName,
-  //       lastName,
-  //       username,
-  //     },
-  //     authenticated: true,
-  //   }));
-  // };
-
-  // useEffect(() => {
-  //   if (storageContext.getItem == null) return;
-
-  //   const accessToken = storageContext.getItem("accessToken");
-
-  //   if (!accessToken) return;
-
-  //   business.getAuthenticatedUser(accessToken).then((res) => {
-  //     setStateFromRes(res);
-  //   });
-  // }, [storageContext]);
+      const { email, username } = res;
+      setState({
+        ...state,
+        user: {
+          email,
+          username,
+        },
+        authenticated: true,
+      });
+    });
+  }, []);
 
   const context: MutableAuthenticationContext = {
     state,

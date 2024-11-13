@@ -3,28 +3,23 @@ import { Game } from "../models";
 
 export interface GameApiReturnType {
   id: number;
-  dateStart: string;
-  dateEnd?: string;
+  name: string;
   characterName: string;
   success: boolean;
+  dateStart: string;
+  dateEnd?: string;
 }
 
-export type ApiReturnType = GameApiReturnType[];
-
-async function getAllGamesFromApiRaw(): Promise<ApiReturnType> {
-  const response = await axiosClient.get<ApiReturnType>("/api/Game");
+async function getAllGamesFromApiRaw(): Promise<GameApiReturnType[]> {
+  const response = await axiosClient.get<GameApiReturnType[]>("/api/Game");
   return response.data;
 }
 
 async function getAllCharactersFromApiBase(
-  fetchRaw: () => Promise<ApiReturnType>
+  fetchRaw: () => Promise<GameApiReturnType[]>
 ): Promise<Game[]> {
   const rawRes = await fetchRaw();
-  return rawRes.map((element) => ({
-    id: element.id,
-    player: { name: element.characterName },
-    isWon: element.success,
-  }));
+  return rawRes;
 }
 
 export async function getAllGamesFromApi(): Promise<Game[]> {

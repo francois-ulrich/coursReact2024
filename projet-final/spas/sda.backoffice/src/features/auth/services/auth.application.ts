@@ -1,6 +1,9 @@
 import { LoginFormData, PostOneUser } from "../custom-types";
 import { LoginResponse } from "../models";
-import { getAuthDataFromApi } from "./auth.infrastructure";
+import {
+  getAuthenticatedUserFromApi,
+  getLoginFromApi,
+} from "./auth.infrastructure";
 
 async function logIn(
   formData: LoginFormData,
@@ -13,11 +16,11 @@ async function logIn(
 function factoryLogInUser(
   loginFormData: LoginFormData
 ): Promise<LoginResponse> {
-  return logIn(loginFormData, getAuthDataFromApi);
+  return logIn(loginFormData, getLoginFromApi);
 }
 
 const business = {
-  // getAuthenticatedUser: getAuthenticatedUserFromApi,
+  getAuthenticatedUser: getAuthenticatedUserFromApi,
   login: factoryLogInUser,
 };
 

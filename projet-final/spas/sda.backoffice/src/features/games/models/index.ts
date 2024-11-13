@@ -2,8 +2,11 @@ export type GameStatus = "Ready" | "Ongoing" | "Success" | "Fail";
 
 export interface Game {
   id: number;
-  player: Player;
-  isWon: boolean;
+  name: string;
+  characterName: string;
+  success: boolean;
+  dateStart: string;
+  dateEnd?: string;
 }
 
 export interface Player {

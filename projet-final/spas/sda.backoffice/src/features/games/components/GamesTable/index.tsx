@@ -16,22 +16,8 @@ export type TableGameProp = {
 };
 
 const GamesTable = (props: TableGameProp) => {
-  const changeGameIsWonStatusCallback = (
-    gameId: number,
-    newIsWonState: boolean
-  ): void => {
-    if (props.changeGameIsWonStatusCallback === undefined) return;
-    props.changeGameIsWonStatusCallback(gameId, newIsWonState);
-  };
-
   const rowsList = props.games.map((game: Game) => (
-    <GamesTableRow
-      key={game.id}
-      id={game.id}
-      playerName={game.player.name}
-      isWon={game.isWon}
-      changeGameIsWonStatusCallback={changeGameIsWonStatusCallback}
-    />
+    <GamesTableRow key={game.id} game={game} />
   ));
 
   const component = (
@@ -40,9 +26,11 @@ const GamesTable = (props: TableGameProp) => {
         <thead>
           <tr>
             <td>ID</td>
-            <td>Player</td>
-            <td>Is Won</td>
-            <td>Actions</td>
+            <td>Nom du jeu</td>
+            <td>Nom du joueur</td>
+            <td>Jeu fini ?</td>
+            <td>Date de début</td>
+            <td>Date de fin</td>
           </tr>
         </thead>
         <tbody>{rowsList}</tbody>

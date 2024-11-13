@@ -24,38 +24,9 @@ const GamesList = () => {
 
   const [games, setGames] = useState<Game[]>([]);
 
-  const addGame = () => {
-    const newGame = {
-      id: games.length + 1,
-      player: { name: "Irumi" },
-      isWon: false,
-    };
-
-    setGames((games) => [...games, newGame]);
-  };
-
-  const changeGameIsWonStatus = (gameId: number, newIsWonState: boolean) => {
-    setGames(
-      games.map((game) => {
-        if (game.id === gameId) {
-          return { ...game, isWon: newIsWonState };
-        } else {
-          return game;
-        }
-      })
-    );
-  };
-
-  const addGameButtonComponent = (
-    <Row>
-      <Col>
-        <button onClick={addGame}>Add Game</button>
-      </Col>
-    </Row>
-  );
-
   useEffect(() => {
     business.getAll().then((res) => {
+      console.log(res);
       setGames(res);
     });
   }, []);
@@ -63,13 +34,9 @@ const GamesList = () => {
   const gameTableComponent = (
     <>
       {displayTitle && <GameTitle></GameTitle>}
-      {addGameButtonComponent}
       <Row>
         <Col>
-          <GamesTable
-            games={games}
-            changeGameIsWonStatusCallback={changeGameIsWonStatus}
-          ></GamesTable>
+          <GamesTable games={games}></GamesTable>
         </Col>
       </Row>
     </>

@@ -2,7 +2,7 @@ import axiosClient from "../../../axiosClient";
 import { LoginFormData } from "../custom-types";
 import { LoginResponse } from "../models";
 
-export async function getAuthDataFromApi(
+export async function getLoginFromApi(
   formLoginData: LoginFormData
 ): Promise<LoginResponse> {
   const { login, password } = formLoginData;
@@ -14,5 +14,11 @@ export async function getAuthDataFromApi(
 
   const result = await response;
 
+  return result.data;
+}
+
+export async function getAuthenticatedUserFromApi() {
+  const response = axiosClient.get<LoginResponse>("/api/auth/me");
+  const result = await response;
   return result.data;
 }
