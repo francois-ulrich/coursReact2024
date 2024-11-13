@@ -1,4 +1,5 @@
 import { Game } from "../../models";
+import { format, compareAsc } from "date-fns";
 
 export type GamesTableRowProp = {
   game: Game;
@@ -16,8 +17,8 @@ export const GamesTableRow = (props: GamesTableRowProp) => {
       <td>{name}</td>
       <td>{characterName}</td>
       <td>{success ? "Oui" : "Non"}</td>
-      <td>{dateStart}</td>
-      <td>{dateEnd}</td>
+      <td>{format(new Date(dateStart), "dd/MM/yyyy kk:mm")}</td>
+      <td>{dateEnd ? format(new Date(dateEnd), "dd/MM/yyyy kk:mm") : "-"}</td>
     </tr>
   );
 
