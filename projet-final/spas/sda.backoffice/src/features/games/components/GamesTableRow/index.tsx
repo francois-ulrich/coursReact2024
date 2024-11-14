@@ -1,5 +1,5 @@
 import { Game } from "../../models";
-import { format, compareAsc } from "date-fns";
+import { format } from "date-fns";
 
 export type GamesTableRowProp = {
   game: Game;

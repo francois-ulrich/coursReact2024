@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import axiosClient from "../../../axiosClient";
 import { LoginFormData } from "../custom-types";
 import { LoginResponse } from "../models";
@@ -17,8 +18,10 @@ export async function getLoginFromApi(
   return result.data;
 }
 
-export async function getAuthenticatedUserFromApi() {
+export async function getAuthenticatedUserFromApi(): Promise<
+  AxiosResponse<LoginResponse>
+> {
   const response = axiosClient.get<LoginResponse>("/api/auth/me");
   const result = await response;
-  return result.data;
+  return result;
 }
