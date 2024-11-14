@@ -1,18 +1,13 @@
 import "./App.css";
-import { MainRoutes } from "./AppRoutes";
 import { AuthenticationContextProvider } from "./features/auth/store/AuthenticationContextProvider";
+import { AppView } from "./shared/components/AppView";
 import { StorageContextProvider } from "./shared/hooks/StorageContextProvider";
-import MainNavBar from "./shared/layout/MainNavBar";
 
 function App() {
   return (
     <StorageContextProvider>
       <AuthenticationContextProvider>
-        <MainNavBar />
-
-        <div className="uiBody">
-          <MainRoutes />
-        </div>
+        <AppView></AppView>
       </AuthenticationContextProvider>
     </StorageContextProvider>
   );

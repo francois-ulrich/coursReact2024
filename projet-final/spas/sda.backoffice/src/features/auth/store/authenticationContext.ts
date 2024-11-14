@@ -5,6 +5,7 @@ import { LoginFormData } from "../custom-types";
 export interface AuthenticationContextState {
   user: User | null;
   authenticated: boolean;
+  autoAuthIsDone: boolean;
 }
 
 export interface MutableAuthenticationContext {
@@ -23,6 +24,7 @@ const initialContextState: MutableAuthenticationContext = {
       username: null,
     },
     authenticated: false,
+    autoAuthIsDone: false,
   },
   setState: null,
   logIn: null,

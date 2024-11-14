@@ -15,6 +15,7 @@ export const AuthenticationContextProvider = (props: PropsWithChildren) => {
       username: null,
     },
     authenticated: false,
+    autoAuthIsDone: false,
   });
 
   const logIn = (formLoginData: LoginFormData) => {
@@ -44,8 +45,6 @@ export const AuthenticationContextProvider = (props: PropsWithChildren) => {
   };
 
   const logInAuto = async () => {
-    // const response = await business.getAuthenticatedUser();
-
     try {
       const result = await business.getAuthenticatedUser();
 
@@ -59,25 +58,18 @@ export const AuthenticationContextProvider = (props: PropsWithChildren) => {
         },
         authenticated: true,
       });
-
-      console.log("connected !");
-    } catch (error) {
-      console.log("Error:", error);
-
-      console.log("unconnected");
+    } catch {
+      setState({
+        ...state,
+        autoAuthIsDone: true,
+        authenticated: false,
+      });
+    } finally {
+      setState((prevState) => ({
+        ...prevState,
+        autoAuthIsDone: true,
+      }));
     }
-
-    // console.log(response);
-    // console.log("ag");
-    // const { email, username } = res;
-    // setState({
-    //   ...state,
-    //   user: {
-    //     email,
-    //     username,
-    //   },
-    //   authenticated: true,
-    // });
   };
 
   useEffect(() => {
