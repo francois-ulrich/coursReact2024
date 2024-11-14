@@ -1,14 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-// import business from "../../services/auth.application";
 import { LoginFormData } from "../../custom-types";
 import { useAuthenticationContext } from "../../store/authenticationContext";
-import { useStorageContext } from "../../../../shared/hooks/storageContext";
 
 export const LoginForm = () => {
   const authenticationContext = useAuthenticationContext();
-  const storageContext = useStorageContext();
 
   const [formData, setFormData] = useState<LoginFormData>({
     login: "fulrich3@gmail.com",
@@ -31,12 +28,6 @@ export const LoginForm = () => {
     if (authenticationContext.logIn === null) return;
 
     authenticationContext.logIn(formData);
-  };
-
-  const handleLogout = () => {
-    if (authenticationContext.logOut === null) return;
-
-    authenticationContext.logOut();
   };
 
   return (
@@ -67,16 +58,6 @@ export const LoginForm = () => {
             Se connecter
           </Button>
         </Form>
-
-        <Button variant="danger" type="submit" onClick={handleLogout}>
-          Déconnexion
-        </Button>
-      </div>
-      <div>
-        <p>Storage data :</p>
-        <p>{JSON.stringify(storageContext.state)}</p>
-        <p>Authentication data :</p>
-        <p>{JSON.stringify(authenticationContext.state)}</p>
       </div>
     </>
   );
