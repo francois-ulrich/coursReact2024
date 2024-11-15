@@ -7,25 +7,29 @@ import { Row } from "react-bootstrap";
 import { Game } from "../../models";
 import { useEffect, useState } from "react";
 import business from "../../services/games.application";
-import { format } from "date-fns";
 
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 
 import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
+import "primeicons/primeicons.css";
+import { GameEditDialog } from "../Dialogs/GameEditDialog";
+import { formatStringDate } from "../../../../util";
 
 const GamesList = () => {
   const [games, setGames] = useState<Game[]>([]);
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+
+  const [isEditionDialogVisible, setIsEditionDialogVisible] =
+    useState<boolean>(false);
 
   const dateStartFormatBody = (game: Game): string => {
-    return format(new Date(game.dateStart), "dd/MM/yyyy kk:mm");
+    return formatStringDate(game.dateStart);
   };
 
   const dateEndFormatBody = (game: Game): string => {
-    return game.dateEnd
-      ? format(new Date(game.dateEnd), "dd/MM/yyyy kk:mm")
-      : "-";
+    return formatStringDate(game.dateEnd);
   };
 
   const successTemplateBody = (game: Game): string => {
@@ -37,25 +41,30 @@ const GamesList = () => {
       <div>
         <Button
           icon="pi pi-pencil"
-          className="p-button-rounded p-button-warning p-mr-2"
-          onClick={() => handleEdit(game)}
-          aria-label="Edit"
+          rounded
+          outlined
+          className="mr-2"
+          onClick={() => openEdit(game)}
         />
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-danger"
-          onClick={() => handleDelete(game)}
-          aria-label="Delete"
+          rounded
+          outlined
+          severity="danger"
+          onClick={() => openDelete(game)}
         />
       </div>
     );
   };
 
-  const handleEdit = (game: Game) => {
+  const openEdit = (game: Game) => {
+    setSelectedGame(game);
+    // setEditDialogIsVisible(true);
     console.log("Edit game:", game);
   };
 
-  const handleDelete = (game: Game) => {
+  const openDelete = (game: Game) => {
+    setSelectedGame(game);
     console.log("Delete:", game);
   };
 
@@ -65,10 +74,9 @@ const GamesList = () => {
     });
   }, []);
 
-  const gameTableComponent = (
+  return (
     <>
       <h1>Games</h1>
-
       <Row>
         <DataTable value={games} dataKey="id">
           <Column field="id" header="ID" />
@@ -99,10 +107,13 @@ const GamesList = () => {
           ></Column>
         </DataTable>
       </Row>
+
+      <GameEditDialog
+        game={selectedGame}
+        visible={isEditionDialogVisible}
+      ></GameEditDialog>
     </>
   );
-
-  return gameTableComponent;
 };
 
 export default GamesList;

@@ -1,3 +1,4 @@
+import { PrimeReactProvider } from "primereact/api";
 import "./App.css";
 import { AuthenticationContextProvider } from "./features/auth/store/AuthenticationContextProvider";
 import { AppView } from "./shared/components/AppView";
@@ -7,7 +8,9 @@ function App() {
   return (
     <StorageContextProvider>
       <AuthenticationContextProvider>
-        <AppView></AppView>
+        <PrimeReactProvider>
+          <AppView></AppView>
+        </PrimeReactProvider>
       </AuthenticationContextProvider>
     </StorageContextProvider>
   );
