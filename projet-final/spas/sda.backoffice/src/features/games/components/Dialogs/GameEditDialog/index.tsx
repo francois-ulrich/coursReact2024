@@ -1,9 +1,10 @@
 import { Dialog } from "primereact/dialog";
 import { GameEditForm } from "../../GameEditForm";
 import { Game } from "../../../models";
+import "primeicons/primeicons.css";
 
 interface Props {
-  game: Game | null;
+  game: Game;
   visible: boolean;
   onHide: () => void;
 }
@@ -11,10 +12,13 @@ interface Props {
 export const GameEditDialog = (props: Props) => {
   return (
     <>
-      <Dialog header="Édition" style={{ width: "50vw" }} onHide={props.onHide}>
-        {JSON.stringify(props)}
-
-        <GameEditForm></GameEditForm>
+      <Dialog
+        header="Édition"
+        style={{ width: "50vw" }}
+        visible={props.visible}
+        onHide={props.onHide}
+      >
+        <GameEditForm game={props.game}></GameEditForm>
       </Dialog>
     </>
   );

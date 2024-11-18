@@ -9,6 +9,14 @@ export interface Game {
   dateEnd?: string;
 }
 
+export interface GameFormData {
+  name: string;
+  characterName: string;
+  success: boolean;
+  dateStart: string;
+  dateEnd?: string;
+}
+
 export interface Player {
   name: string;
 }
