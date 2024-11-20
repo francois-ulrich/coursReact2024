@@ -6,7 +6,7 @@ export interface Game {
   characterName: string;
   success: boolean;
   dateStart: string;
-  dateEnd?: string;
+  dateEnd: string | null;
 }
 
 export interface GameFormData {
@@ -14,7 +14,15 @@ export interface GameFormData {
   characterName: string;
   success: boolean;
   dateStart: string;
-  dateEnd?: string;
+  dateEnd: string;
+}
+
+export interface GameEditRequestData {
+  name: string;
+  characterName: string;
+  success: boolean;
+  dateStart: string;
+  dateEnd: string | null;
 }
 
 export interface Player {

@@ -1,6 +1,6 @@
 import { GetAllGames } from "../custom-types";
 import { Game } from "../models";
-import { getAllGamesFromApi } from "./games.infrastructure";
+import { getAllGamesFromApi, updateGame } from "./games.infrastructure";
 
 /**
  * Gets all gams
@@ -17,6 +17,7 @@ function factoryGetAllGamesBusiness(): Promise<Game[]> {
 
 const business = {
   getAll: factoryGetAllGamesBusiness,
+  update: updateGame,
 };
 
 export default business;

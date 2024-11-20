@@ -1,5 +1,6 @@
+import { AxiosResponse } from "axios";
 import axiosClient from "../../../axiosClient";
-import { Game } from "../models";
+import { Game, GameEditRequestData } from "../models";
 
 export interface GameApiReturnType {
   id: number;
@@ -7,9 +8,9 @@ export interface GameApiReturnType {
   characterName: string;
   success: boolean;
   dateStart: string;
-  dateEnd?: string;
+  dateEnd: string | null;
 }
-
+// GET
 async function getAllGamesFromApiRaw(): Promise<GameApiReturnType[]> {
   const response = await axiosClient.get<GameApiReturnType[]>("/api/Game");
   return response.data;
@@ -25,3 +26,21 @@ async function getAllCharactersFromApiBase(
 export async function getAllGamesFromApi(): Promise<Game[]> {
   return getAllCharactersFromApiBase(getAllGamesFromApiRaw);
 }
+
+// POST
+
+// PUT
+export async function updateGame(
+  id: number,
+  gameData: GameEditRequestData
+): Promise<Promise<AxiosResponse>> {
+  const response = await axiosClient.put<Promise<AxiosResponse>>(
+    `/api/Game/${id}`,
+    {
+      ...gameData,
+    }
+  );
+  return response.data;
+}
+
+// DELETE

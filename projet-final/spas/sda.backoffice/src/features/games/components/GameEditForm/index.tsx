@@ -1,10 +1,12 @@
 import Form from "react-bootstrap/Form";
-import { Game, GameFormData } from "../../models";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { Game, GameEditRequestData, GameFormData } from "../../models";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { formatStringToDateFormat } from "../../../../util";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import {
+  dateToInputDateValue,
+  formatStringToDateFormat,
+} from "../../../../util";
+import business from "../../services/games.application";
 
 interface Props {
   game: Game;
@@ -16,14 +18,10 @@ export const GameEditForm = (props: Props) => {
     characterName: props.game.characterName,
     success: props.game.success,
     dateStart: formatStringToDateFormat(props.game.dateStart, "yyyy-MM-dd"),
-    dateEnd: props.game.dateEnd
-      ? formatStringToDateFormat(props.game.dateEnd, "yyyy-MM-dd")
-      : "",
-  });
-
-  const [dates, setDates] = useState<Record<string, Date | null>>({
-    startDate: new Date(props.game.dateStart),
-    endDate: props.game.dateEnd ? new Date(props.game.dateEnd) : null,
+    dateEnd:
+      props.game.success && props.game.dateEnd
+        ? formatStringToDateFormat(props.game.dateEnd, "yyyy-MM-dd")
+        : "",
   });
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,23 +42,25 @@ export const GameEditForm = (props: Props) => {
     });
   };
 
-  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    // const { name, value } = event.target;
-    // setDates((prevDates) => ({
-    //   ...prevDates,
-    //   [name]: value,
-    // }));
-  };
-
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(formData);
+    const game: GameEditRequestData = {
+      ...formData,
+      dateEnd: formData.dateEnd === "" ? null : formData.dateEnd,
+    };
+
+    business.update(props.game.id, game).then((res) => {
+      console.log(res);
+    });
   };
 
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      dateEnd: formData.success ? dateToInputDateValue(new Date()) : "",
+    });
+  }, [formData.success]);
 
   return (
     <>
@@ -99,9 +99,9 @@ export const GameEditForm = (props: Props) => {
           <Form.Label>Date de début</Form.Label>
           <Form.Control
             type="date"
-            name="date"
+            name="dateStart"
             value={formData.dateStart}
-            onChange={handleDateChange}
+            onChange={handleInputChange}
           />
         </Form.Group>
 
@@ -110,9 +110,9 @@ export const GameEditForm = (props: Props) => {
           <Form.Control
             disabled={!formData.success}
             type="date"
-            name="date"
+            name="dateEnd"
             value={formData.dateEnd}
-            onChange={handleDateChange}
+            onChange={handleInputChange}
           />
         </Form.Group>
 

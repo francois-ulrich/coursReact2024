@@ -66,12 +66,12 @@ const GamesList = () => {
   const openEdit = (game: Game) => {
     setSelectedGame(game);
     setIsEditionDialogVisible(true);
-    console.log("Edit game:", game);
+    // console.log("Edit game:", game);
   };
 
   const openDelete = (game: Game) => {
     setSelectedGame(game);
-    console.log("Delete:", game);
+    // console.log("Delete:", game);
   };
 
   const handleEditDialogOnHide = () => {
@@ -87,7 +87,7 @@ const GamesList = () => {
   }, []);
 
   useEffect(() => {
-    console.log(selectedGame);
+    // console.log(selectedGame);
   }, [selectedGame]);
 
   return (
