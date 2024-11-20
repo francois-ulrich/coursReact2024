@@ -33,12 +33,15 @@ export const GameEditForm = (props: Props) => {
     });
   };
 
-  const handleCheckBoxChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSuccessCheckBoxChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, checked } = event.target;
 
     setFormData({
       ...formData,
       [name]: checked,
+      dateEnd: checked ? dateToInputDateValue(new Date()) : "",
     });
   };
 
@@ -56,9 +59,12 @@ export const GameEditForm = (props: Props) => {
   };
 
   useEffect(() => {
+    if (formData.success === true) return;
+
     setFormData({
       ...formData,
-      dateEnd: formData.success ? dateToInputDateValue(new Date()) : "",
+      dateEnd:
+        formData.dateEnd === null ? dateToInputDateValue(new Date()) : "",
     });
   }, [formData.success]);
 
@@ -72,6 +78,7 @@ export const GameEditForm = (props: Props) => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
@@ -82,16 +89,17 @@ export const GameEditForm = (props: Props) => {
             name="characterName"
             value={formData.characterName}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="">
           <Form.Label>Jeu fini ?</Form.Label>
 
-          <Form.Check // prettier-ignore
+          <Form.Check
             name="success"
             checked={formData.success}
-            onChange={handleCheckBoxChange}
+            onChange={handleSuccessCheckBoxChange}
           />
         </Form.Group>
 
@@ -102,6 +110,7 @@ export const GameEditForm = (props: Props) => {
             name="dateStart"
             value={formData.dateStart}
             onChange={handleInputChange}
+            required
           />
         </Form.Group>
 
