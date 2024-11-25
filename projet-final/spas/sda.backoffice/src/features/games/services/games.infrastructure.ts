@@ -33,8 +33,8 @@ export async function getAllGamesFromApi(): Promise<Game[]> {
 export async function updateGame(
   id: number,
   gameData: GameEditRequestData
-): Promise<Promise<AxiosResponse>> {
-  const response = await axiosClient.put<Promise<AxiosResponse>>(
+): Promise<AxiosResponse<Game>> {
+  const response = await axiosClient.put<Promise<AxiosResponse<Game>>>(
     `/api/Game/${id}`,
     {
       ...gameData,

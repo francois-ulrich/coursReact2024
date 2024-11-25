@@ -5,8 +5,7 @@
 
 import { Row } from "react-bootstrap";
 import { Game } from "../../models";
-import { useEffect, useState } from "react";
-import business from "../../services/games.application";
+import { useState } from "react";
 import { PrimeReactProvider } from "primereact/api";
 
 import { DataTable } from "primereact/datatable";
@@ -22,9 +21,12 @@ import {
 import "primereact/resources/themes/lara-light-indigo/theme.css"; // Exemple de thème
 import "primereact/resources/primereact.min.css"; // Styles de base
 import "primeicons/primeicons.css"; // Icônes PrimeIcons
+import { useGamesContext } from "../../store/gamesContext";
+import { GamesContextProvider } from "../../store/GamesContextProvider";
 
 const GamesList = () => {
-  const [games, setGames] = useState<Game[]>([]);
+  const gamesContext = useGamesContext();
+
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
 
   const [isEditionDialogVisible, setIsEditionDialogVisible] =
@@ -80,22 +82,13 @@ const GamesList = () => {
     setIsEditionDialogVisible(false);
   };
 
-  useEffect(() => {
-    business.getAll().then((res) => {
-      setGames(res);
-    });
-  }, []);
-
-  useEffect(() => {
-    // console.log(selectedGame);
-  }, [selectedGame]);
-
   return (
-    <>
+    <GamesContextProvider>
       <h1>Games</h1>
+      <p>{gamesContext.state.games.length}</p>
       <PrimeReactProvider>
         <Row>
-          <DataTable value={games} dataKey="id">
+          <DataTable value={gamesContext.state.games} dataKey="id">
             <Column field="id" header="ID" />
             <Column field="name" header="Nom du jeu" sortable />
             <Column field="characterName" header="Nom du joueur" sortable />
@@ -133,7 +126,7 @@ const GamesList = () => {
           ></GameEditDialog>
         )}
       </PrimeReactProvider>
-    </>
+    </GamesContextProvider>
   );
 };
 

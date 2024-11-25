@@ -45,7 +45,7 @@ export const GameEditForm = (props: Props) => {
     });
   };
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const game: GameEditRequestData = {
@@ -53,9 +53,14 @@ export const GameEditForm = (props: Props) => {
       dateEnd: formData.dateEnd === "" ? null : formData.dateEnd,
     };
 
-    business.update(props.game.id, game).then((res) => {
-      console.log(res);
-    });
+    try {
+      await business.update(props.game.id, game).then((res) => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -110,7 +115,7 @@ export const GameEditForm = (props: Props) => {
             name="dateStart"
             value={formData.dateStart}
             onChange={handleInputChange}
-            required
+            // required
           />
         </Form.Group>
 
