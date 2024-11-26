@@ -5,7 +5,7 @@
 
 import { Row } from "react-bootstrap";
 import { Game } from "../../models";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PrimeReactProvider } from "primereact/api";
 
 import { DataTable } from "primereact/datatable";

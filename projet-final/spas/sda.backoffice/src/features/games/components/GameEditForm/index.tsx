@@ -7,12 +7,15 @@ import {
   formatStringToDateFormat,
 } from "../../../../util";
 import business from "../../services/games.application";
+import { useGamesContext } from "../../store/gamesContext";
 
 interface Props {
   game: Game;
 }
 
 export const GameEditForm = (props: Props) => {
+  const gamesContext = useGamesContext();
+
   const [formData, setFormData] = useState<GameFormData>({
     name: props.game.name,
     characterName: props.game.characterName,
@@ -54,9 +57,11 @@ export const GameEditForm = (props: Props) => {
     };
 
     try {
-      await business.update(props.game.id, game).then((res) => {
-        console.log(res);
-      });
+      const res = await business.update(props.game.id, game);
+
+      if (!gamesContext.updateGame) return;
+
+      gamesContext.updateGame(res);
     } catch (error) {
       console.log("error");
       console.log(error);

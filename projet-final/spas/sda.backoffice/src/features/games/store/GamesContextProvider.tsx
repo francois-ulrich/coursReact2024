@@ -5,6 +5,7 @@ import {
   MutableGamesContext,
 } from "./gamesContext";
 import business from "../services/games.application";
+import { Game } from "../models";
 
 export const GamesContextProvider = (props: PropsWithChildren) => {
   const [state, setState] = useState<GamesContextState>({
@@ -20,14 +21,24 @@ export const GamesContextProvider = (props: PropsWithChildren) => {
     });
   };
 
-  useEffect(() => {
-    fetchGames();
-  }, []);
+  const updateGame = (updatedGame: Game) => {
+    setState((prevState) => ({
+      ...prevState,
+      games: prevState.games.map((game) =>
+        game.id === updatedGame.id ? updatedGame : game
+      ),
+    }));
+  };
 
   const context: MutableGamesContext = {
     state,
     setState,
+    updateGame,
   };
+
+  useEffect(() => {
+    fetchGames();
+  }, []);
 
   return (
     <GamesContext.Provider value={context}>
