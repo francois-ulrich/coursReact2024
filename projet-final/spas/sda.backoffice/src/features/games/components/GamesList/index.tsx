@@ -5,7 +5,7 @@
 
 import { Row } from "react-bootstrap";
 import { Game } from "../../models";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PrimeReactProvider } from "primereact/api";
 
 import { DataTable } from "primereact/datatable";
@@ -22,7 +22,6 @@ import "primereact/resources/themes/lara-light-indigo/theme.css"; // Exemple de 
 import "primereact/resources/primereact.min.css"; // Styles de base
 import "primeicons/primeicons.css"; // Icônes PrimeIcons
 import { useGamesContext } from "../../store/gamesContext";
-import { GamesContextProvider } from "../../store/GamesContextProvider";
 
 const GamesList = () => {
   const gamesContext = useGamesContext();
@@ -68,12 +67,10 @@ const GamesList = () => {
   const openEdit = (game: Game) => {
     setSelectedGame(game);
     setIsEditionDialogVisible(true);
-    // console.log("Edit game:", game);
   };
 
   const openDelete = (game: Game) => {
     setSelectedGame(game);
-    // console.log("Delete:", game);
   };
 
   const handleEditDialogOnHide = () => {
@@ -83,9 +80,9 @@ const GamesList = () => {
   };
 
   return (
-    <GamesContextProvider>
+    <>
       <h1>Games</h1>
-      <p>{gamesContext.state.games.length}</p>
+
       <PrimeReactProvider>
         <Row>
           <DataTable value={gamesContext.state.games} dataKey="id">
@@ -126,7 +123,7 @@ const GamesList = () => {
           ></GameEditDialog>
         )}
       </PrimeReactProvider>
-    </GamesContextProvider>
+    </>
   );
 };
 
