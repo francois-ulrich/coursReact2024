@@ -15,9 +15,6 @@ import {
   formatNullableStringToDateTime,
 } from "../../../../util";
 
-import "primereact/resources/themes/lara-light-indigo/theme.css"; // Exemple de thème
-import "primereact/resources/primereact.min.css"; // Styles de base
-import "primeicons/primeicons.css"; // Icônes PrimeIcons
 import { useGamesContext } from "../../store/gamesContext";
 
 interface Props {

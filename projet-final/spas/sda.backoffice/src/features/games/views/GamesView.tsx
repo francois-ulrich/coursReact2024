@@ -4,6 +4,11 @@ import { Game } from "../models";
 import { GamesContextProvider } from "../store/GamesContextProvider";
 import { GameEditDialog } from "../components/Dialogs/GameEditDialog";
 import { useState } from "react";
+import { Button } from "primereact/button";
+
+import "primereact/resources/themes/lara-light-indigo/theme.css"; // Exemple de thème
+import "primereact/resources/primereact.min.css"; // Styles de base
+import "primeicons/primeicons.css"; // Icônes PrimeIcons
 
 export const GamesView = () => {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
@@ -15,6 +20,10 @@ export const GamesView = () => {
     if (!isEditionDialogVisible) return;
 
     setIsEditionDialogVisible(false);
+  };
+
+  const openNew = () => {
+    console.log("Open new");
   };
 
   const openEdit = (game: Game) => {
@@ -30,6 +39,15 @@ export const GamesView = () => {
     <>
       <GamesContextProvider>
         <PrimeReactProvider>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              label="New"
+              icon="pi pi-plus"
+              severity="success"
+              onClick={openNew}
+            />
+          </div>
+
           <GamesList openEdit={openEdit} openDelete={openDelete} />
 
           {selectedGame && (
