@@ -5,14 +5,11 @@
 
 import { Row } from "react-bootstrap";
 import { Game } from "../../models";
-import { useState } from "react";
-import { PrimeReactProvider } from "primereact/api";
 
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 
-import { GameEditDialog } from "../Dialogs/GameEditDialog";
 import {
   formatStringToDateTime,
   formatNullableStringToDateTime,
@@ -23,13 +20,13 @@ import "primereact/resources/primereact.min.css"; // Styles de base
 import "primeicons/primeicons.css"; // Icônes PrimeIcons
 import { useGamesContext } from "../../store/gamesContext";
 
-const GamesList = () => {
+interface Props {
+  openEdit: (game: Game) => void;
+  openDelete: (game: Game) => void;
+}
+
+const GamesList = (props: Props) => {
   const gamesContext = useGamesContext();
-
-  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
-
-  const [isEditionDialogVisible, setIsEditionDialogVisible] =
-    useState<boolean>(false);
 
   const dateStartFormatBody = (game: Game): string => {
     return formatStringToDateTime(game.dateStart);
@@ -51,78 +48,53 @@ const GamesList = () => {
           rounded
           outlined
           className="mr-2"
-          onClick={() => openEdit(game)}
+          onClick={() => props.openEdit(game)}
         />
         <Button
           icon="pi pi-trash"
           rounded
           outlined
           severity="danger"
-          onClick={() => openDelete(game)}
+          onClick={() => props.openDelete(game)}
         />
       </div>
     );
-  };
-
-  const openEdit = (game: Game) => {
-    setSelectedGame(game);
-    setIsEditionDialogVisible(true);
-  };
-
-  const openDelete = (game: Game) => {
-    setSelectedGame(game);
-  };
-
-  const handleEditDialogOnHide = () => {
-    if (!isEditionDialogVisible) return;
-
-    setIsEditionDialogVisible(false);
   };
 
   return (
     <>
       <h1>Games</h1>
 
-      <PrimeReactProvider>
-        <Row>
-          <DataTable value={gamesContext.state.games} dataKey="id">
-            <Column field="id" header="ID" />
-            <Column field="name" header="Nom du jeu" sortable />
-            <Column field="characterName" header="Nom du joueur" sortable />
-            <Column
-              field="success"
-              header="Jeu fini ?"
-              body={successTemplateBody}
-              filter
-            />
-            <Column
-              field="dateStart"
-              header="Date de début"
-              body={dateStartFormatBody}
-              sortable
-            />
-            <Column
-              field="dateEnd"
-              header="Date de fin"
-              body={dateEndFormatBody}
-              sortable
-            />
-            <Column
-              body={actionBodyTemplate}
-              exportable={false}
-              style={{ minWidth: "12rem" }}
-            ></Column>
-          </DataTable>
-        </Row>
-
-        {selectedGame && (
-          <GameEditDialog
-            game={selectedGame}
-            visible={isEditionDialogVisible}
-            onHide={handleEditDialogOnHide}
-          ></GameEditDialog>
-        )}
-      </PrimeReactProvider>
+      <Row>
+        <DataTable value={gamesContext.state.games} dataKey="id">
+          <Column field="id" header="ID" />
+          <Column field="name" header="Nom du jeu" sortable />
+          <Column field="characterName" header="Nom du joueur" sortable />
+          <Column
+            field="success"
+            header="Jeu fini ?"
+            body={successTemplateBody}
+            filter
+          />
+          <Column
+            field="dateStart"
+            header="Date de début"
+            body={dateStartFormatBody}
+            sortable
+          />
+          <Column
+            field="dateEnd"
+            header="Date de fin"
+            body={dateEndFormatBody}
+            sortable
+          />
+          <Column
+            body={actionBodyTemplate}
+            exportable={false}
+            style={{ minWidth: "12rem" }}
+          ></Column>
+        </DataTable>
+      </Row>
     </>
   );
 };

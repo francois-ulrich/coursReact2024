@@ -20,7 +20,7 @@ export const GameEditDialog = (props: Props) => {
         visible={props.visible}
         onHide={props.onHide}
       >
-        <GameEditForm game={props.game}></GameEditForm>
+        <GameEditForm game={props.game} onHide={props.onHide}></GameEditForm>
       </Dialog>
     </>
   );

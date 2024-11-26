@@ -12,6 +12,7 @@ import { useToastContext } from "../../../toast/store/toastContext";
 
 interface Props {
   game: Game;
+  onHide: () => void;
 }
 
 export const GameEditForm = (props: Props) => {
@@ -73,6 +74,8 @@ export const GameEditForm = (props: Props) => {
         detail: "La partie a été mise à jour",
         life: 3000,
       });
+
+      props.onHide();
     } catch (error) {
       console.log("error");
       console.log(error);
