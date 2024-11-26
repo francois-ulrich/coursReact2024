@@ -4,12 +4,14 @@ import { Game } from "../../../models";
 import "primeicons/primeicons.css";
 
 interface Props {
-  game: Game;
+  game: Game | undefined;
   visible: boolean;
   onHide: () => void;
 }
 
 export const GameEditDialog = (props: Props) => {
+  if (!props.game) return <></>;
+
   return (
     <>
       <Dialog

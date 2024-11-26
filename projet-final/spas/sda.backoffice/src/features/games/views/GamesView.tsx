@@ -1,7 +1,7 @@
 import GamesList from "../components/GamesList";
 import { GamesContextProvider } from "../store/GamesContextProvider";
 
-export const GamesListView = () => {
+export const GamesView = () => {
   return (
     <>
       <GamesContextProvider>

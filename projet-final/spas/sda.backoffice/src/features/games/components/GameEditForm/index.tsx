@@ -8,6 +8,7 @@ import {
 } from "../../../../util";
 import business from "../../services/games.application";
 import { useGamesContext } from "../../store/gamesContext";
+import { useToastContext } from "../../../toast/store/toastContext";
 
 interface Props {
   game: Game;
@@ -15,6 +16,7 @@ interface Props {
 
 export const GameEditForm = (props: Props) => {
   const gamesContext = useGamesContext();
+  const toastContext = useToastContext();
 
   const [formData, setFormData] = useState<GameFormData>({
     name: props.game.name,
@@ -62,6 +64,15 @@ export const GameEditForm = (props: Props) => {
       if (!gamesContext.updateGame) return;
 
       gamesContext.updateGame(res);
+
+      if (!toastContext.show) return;
+
+      toastContext.show({
+        severity: "success",
+        summary: "Success",
+        detail: "La partie a été mise à jour",
+        life: 3000,
+      });
     } catch (error) {
       console.log("error");
       console.log(error);
@@ -81,7 +92,7 @@ export const GameEditForm = (props: Props) => {
   return (
     <>
       <Form onSubmit={handleFormSubmit}>
-        <Form.Group className="mb-3" controlId="">
+        <Form.Group className="mb-3">
           <Form.Label>Nom du jeu</Form.Label>
           <Form.Control
             type="string"
@@ -92,7 +103,7 @@ export const GameEditForm = (props: Props) => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="">
+        <Form.Group className="mb-3">
           <Form.Label>Nom du joueur</Form.Label>
           <Form.Control
             type="string"
@@ -103,7 +114,7 @@ export const GameEditForm = (props: Props) => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="">
+        <Form.Group className="mb-3">
           <Form.Label>Jeu fini ?</Form.Label>
 
           <Form.Check
@@ -113,7 +124,7 @@ export const GameEditForm = (props: Props) => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="">
+        <Form.Group className="mb-3">
           <Form.Label>Date de début</Form.Label>
           <Form.Control
             type="date"
@@ -124,7 +135,7 @@ export const GameEditForm = (props: Props) => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="">
+        <Form.Group className="mb-3">
           <Form.Label>Date de fin</Form.Label>
           <Form.Control
             disabled={!formData.success}

@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import axiosClient from "../../../axiosClient";
 import { Game, GameEditRequestData } from "../models";
 
