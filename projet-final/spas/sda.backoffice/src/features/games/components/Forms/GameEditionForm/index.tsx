@@ -1,8 +1,8 @@
-import { Game, GameEditRequestData, GameFormData } from "../../models";
+import { Game, GameEditRequestData, GameFormData } from "../../../models";
 
-import business from "../../services/games.application";
-import { useGamesContext } from "../../store/gamesContext";
-import { useToastContext } from "../../../toast/store/toastContext";
+import business from "../../../services/games.application";
+import { useGamesContext } from "../../../store/gamesContext";
+import { useToastContext } from "../../../../toast/store/toastContext";
 import { GameForm } from "../GameForm";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   onHide: () => void;
 }
 
-export const GameEditForm = (props: Props) => {
+export const GameEditionForm = (props: Props) => {
   const gamesContext = useGamesContext();
   const toastContext = useToastContext();
 

@@ -1,14 +1,14 @@
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Game, GameFormData } from "../../models";
+import { Game, GameFormData } from "../../../models";
 import {
   dateToInputDateValue,
   formatStringToDateFormat,
-} from "../../../../util";
+} from "../../../../../util";
 
 interface Props {
-  game: Game | null;
+  game?: Game;
   onHide: () => void;
   handleFormSubmit: (formData: GameFormData) => void;
 }

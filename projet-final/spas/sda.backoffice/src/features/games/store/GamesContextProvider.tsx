@@ -21,6 +21,16 @@ export const GamesContextProvider = (props: PropsWithChildren) => {
     });
   };
 
+  const createGame = (createdGame: Game) => {
+    setState((prevState) => ({
+      ...prevState,
+      games: {
+        ...prevState.games,
+        createdGame,
+      },
+    }));
+  };
+
   const updateGame = (updatedGame: Game) => {
     setState((prevState) => ({
       ...prevState,
@@ -30,10 +40,19 @@ export const GamesContextProvider = (props: PropsWithChildren) => {
     }));
   };
 
+  const deleteGame = (deletedGame: Game) => {
+    setState((prevState) => ({
+      ...prevState,
+      games: prevState.games.filter((game) => game.id !== deletedGame.id),
+    }));
+  };
+
   const context: MutableGamesContext = {
     state,
     setState,
+    createGame,
     updateGame,
+    deleteGame,
   };
 
   useEffect(() => {

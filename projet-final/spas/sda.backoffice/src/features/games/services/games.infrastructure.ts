@@ -27,6 +27,13 @@ export async function getAllGamesFromApi(): Promise<Game[]> {
 }
 
 // POST
+export async function createGame(gameData: GameEditRequestData): Promise<Game> {
+  const response = await axiosClient.post<Game>(`/api/Game`, {
+    ...gameData,
+  });
+
+  return response.data;
+}
 
 // PUT
 export async function updateGame(
@@ -34,10 +41,15 @@ export async function updateGame(
   gameData: GameEditRequestData
 ): Promise<Game> {
   const response = await axiosClient.put<Game>(`/api/Game/${id}`, {
-    ...gameData,
+    gameData,
   });
 
   return response.data;
 }
 
 // DELETE
+export async function deleteGame(id: number): Promise<Game> {
+  const response = await axiosClient.delete<Game>(`/api/Game/${id}`);
+
+  return response.data;
+}

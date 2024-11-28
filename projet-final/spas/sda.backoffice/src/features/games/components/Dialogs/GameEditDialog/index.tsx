@@ -1,5 +1,5 @@
 import { Dialog } from "primereact/dialog";
-import { GameEditForm } from "../../GameEditForm";
+import { GameEditionForm } from "../../Forms/GameEditionForm";
 import { Game } from "../../../models";
 import "primeicons/primeicons.css";
 
@@ -20,7 +20,10 @@ export const GameEditDialog = (props: Props) => {
         visible={props.visible}
         onHide={props.onHide}
       >
-        <GameEditForm game={props.game} onHide={props.onHide}></GameEditForm>
+        <GameEditionForm
+          game={props.game}
+          onHide={props.onHide}
+        ></GameEditionForm>
       </Dialog>
     </>
   );

@@ -8,7 +8,9 @@ export interface GamesContextState {
 export interface MutableGamesContext {
   state: GamesContextState;
   setState: React.Dispatch<React.SetStateAction<GamesContextState>> | null;
+  createGame: ((game: Game) => void) | null;
   updateGame: ((game: Game) => void) | null;
+  deleteGame: ((game: Game) => void) | null;
 }
 
 const initialContextState: MutableGamesContext = {
@@ -16,7 +18,9 @@ const initialContextState: MutableGamesContext = {
     games: [],
   },
   setState: null,
+  createGame: null,
   updateGame: null,
+  deleteGame: null,
 };
 
 export const GamesContext =

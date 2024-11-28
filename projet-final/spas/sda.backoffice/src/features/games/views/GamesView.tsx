@@ -2,19 +2,30 @@ import { PrimeReactProvider } from "primereact/api";
 import GamesList from "../components/GamesList";
 import { Game } from "../models";
 import { GamesContextProvider } from "../store/GamesContextProvider";
-import { GameEditDialog } from "../components/Dialogs/GameEditDialog";
 import { useState } from "react";
 import { Button } from "primereact/button";
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"; // Exemple de thème
 import "primereact/resources/primereact.min.css"; // Styles de base
 import "primeicons/primeicons.css"; // Icônes PrimeIcons
+import { GameCreationDialog } from "../components/Dialogs/GameCreationDialog";
+import { GameDeletionDialog } from "../components/Dialogs/GameDeletionDialog";
 
 export const GamesView = () => {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
 
+  const [isCreationDialogVisible, setIsCreationDialogVisible] =
+    useState<boolean>(false);
   const [isEditionDialogVisible, setIsEditionDialogVisible] =
     useState<boolean>(false);
+  const [isDeletionDialogVisible, setIsDeletionDialogVisible] =
+    useState<boolean>(false);
+
+  const handleCreationDialogOnHide = () => {
+    if (!isCreationDialogVisible) return;
+
+    setIsCreationDialogVisible(false);
+  };
 
   const handleEditDialogOnHide = () => {
     if (!isEditionDialogVisible) return;
@@ -22,8 +33,14 @@ export const GamesView = () => {
     setIsEditionDialogVisible(false);
   };
 
+  const handleDeletionDialogOnHide = () => {
+    if (!isDeletionDialogVisible) return;
+
+    setIsDeletionDialogVisible(false);
+  };
+
   const openNew = () => {
-    console.log("Open new");
+    setIsCreationDialogVisible(true);
   };
 
   const openEdit = (game: Game) => {
@@ -33,6 +50,7 @@ export const GamesView = () => {
 
   const openDelete = (game: Game) => {
     setSelectedGame(game);
+    setIsDeletionDialogVisible(true);
   };
 
   return (
@@ -44,18 +62,32 @@ export const GamesView = () => {
               label="New"
               icon="pi pi-plus"
               severity="success"
+              className="p-button-text"
               onClick={openNew}
             />
           </div>
 
           <GamesList openEdit={openEdit} openDelete={openDelete} />
 
+          <GameCreationDialog
+            visible={isCreationDialogVisible}
+            onHide={handleCreationDialogOnHide}
+          ></GameCreationDialog>
+
           {selectedGame && (
-            <GameEditDialog
-              game={selectedGame}
-              visible={isEditionDialogVisible}
-              onHide={handleEditDialogOnHide}
-            ></GameEditDialog>
+            <>
+              <GameDeletionDialog
+                game={selectedGame}
+                visible={isEditionDialogVisible}
+                onHide={handleEditDialogOnHide}
+              ></GameDeletionDialog>
+
+              <GameDeletionDialog
+                game={selectedGame}
+                visible={isDeletionDialogVisible}
+                onHide={handleDeletionDialogOnHide}
+              ></GameDeletionDialog>
+            </>
           )}
         </PrimeReactProvider>
       </GamesContextProvider>
