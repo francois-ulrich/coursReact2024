@@ -22,13 +22,10 @@ export const GamesContextProvider = (props: PropsWithChildren) => {
   };
 
   const createGame = (createdGame: Game) => {
-    setState((prevState) => ({
-      ...prevState,
-      games: {
-        ...prevState.games,
-        createdGame,
-      },
-    }));
+    setState({
+      ...state,
+      games: [...state.games, createdGame],
+    });
   };
 
   const updateGame = (updatedGame: Game) => {
