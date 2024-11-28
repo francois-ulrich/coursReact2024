@@ -9,7 +9,7 @@ interface Props {
   onHide: () => void;
 }
 
-export const GameEditDialog = (props: Props) => {
+export const GameEditionDialog = (props: Props) => {
   if (!props.game) return <></>;
 
   return (

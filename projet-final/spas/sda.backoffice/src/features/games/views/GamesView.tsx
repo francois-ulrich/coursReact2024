@@ -9,6 +9,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css"; // Exemple de 
 import "primereact/resources/primereact.min.css"; // Styles de base
 import "primeicons/primeicons.css"; // Icônes PrimeIcons
 import { GameCreationDialog } from "../components/Dialogs/GameCreationDialog";
+import { GameEditionDialog } from "../components/Dialogs/GameEditionDialog";
 import { GameDeletionDialog } from "../components/Dialogs/GameDeletionDialog";
 
 export const GamesView = () => {
@@ -76,11 +77,11 @@ export const GamesView = () => {
 
           {selectedGame && (
             <>
-              <GameDeletionDialog
+              <GameEditionDialog
                 game={selectedGame}
                 visible={isEditionDialogVisible}
                 onHide={handleEditDialogOnHide}
-              ></GameDeletionDialog>
+              ></GameEditionDialog>
 
               <GameDeletionDialog
                 game={selectedGame}

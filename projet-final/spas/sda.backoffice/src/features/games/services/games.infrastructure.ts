@@ -41,7 +41,7 @@ export async function updateGame(
   gameData: GameEditRequestData
 ): Promise<Game> {
   const response = await axiosClient.put<Game>(`/api/Game/${id}`, {
-    gameData,
+    ...gameData,
   });
 
   return response.data;
