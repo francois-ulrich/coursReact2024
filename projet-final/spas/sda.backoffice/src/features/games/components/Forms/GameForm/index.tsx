@@ -1,11 +1,8 @@
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-import { ChangeEvent, FormEvent, useState } from "react";
 import { Game, GameFormData } from "../../../models";
-import {
-  dateToInputDateValue,
-  formatStringToDateFormat,
-} from "../../../../../util";
+import { formatStringToDateFormat } from "../../../../../util";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface Props {
   game?: Game;
@@ -13,102 +10,121 @@ interface Props {
   handleFormSubmit: (formData: GameFormData) => void;
 }
 
+type Inputs = {
+  name: string;
+  characterName: string;
+  success: boolean;
+  dateStart: string;
+  dateEnd: string;
+};
+
 export const GameForm = (props: Props) => {
-  const [formData, setFormData] = useState<GameFormData>({
-    name: props.game ? props.game.name : "",
-    characterName: props.game ? props.game.characterName : "",
-    success: props.game ? props.game.success : false,
-    dateStart: props.game
-      ? formatStringToDateFormat(props.game.dateStart, "yyyy-MM-dd")
-      : "",
-    dateEnd: props.game
-      ? props.game.success && props.game.dateEnd
-        ? formatStringToDateFormat(props.game.dateEnd, "yyyy-MM-dd")
-        : ""
-      : "",
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid },
+  } = useForm<Inputs>({
+    defaultValues: {
+      name: props.game ? props.game.name : "",
+      characterName: props.game ? props.game.characterName : "",
+      success: props.game ? props.game.success : false,
+      dateStart: props.game
+        ? formatStringToDateFormat(props.game.dateStart, "yyyy-MM-dd")
+        : "",
+      dateEnd: props.game
+        ? props.game.success && props.game.dateEnd
+          ? formatStringToDateFormat(props.game.dateEnd, "yyyy-MM-dd")
+          : ""
+        : "",
+    },
   });
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+  const isDateEndRequired = watch("success");
 
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSuccessCheckBoxChange = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, checked } = event.target;
-
-    setFormData({
-      ...formData,
-      [name]: checked,
-      dateEnd: checked ? dateToInputDateValue(new Date()) : "",
-    });
-  };
-
-  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<Inputs> = (formData) => {
     props.handleFormSubmit(formData);
   };
 
   return (
     <>
-      <Form onSubmit={handleFormSubmit}>
-        <Form.Group className="mb-3">
+      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Form.Group className="mb-3" controlId="name">
           <Form.Label>Nom du jeu</Form.Label>
           <Form.Control
-            type="string"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
+            {...register("name", {
+              required: "Veuillez entrer le nom du jeu",
+              minLength: 1,
+            })}
+            isInvalid={!!errors.name}
           />
+
+          {errors.name && (
+            <Form.Control.Feedback type="invalid">
+              {errors.name.message}
+            </Form.Control.Feedback>
+          )}
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="characterName">
           <Form.Label>Nom du joueur</Form.Label>
           <Form.Control
-            type="string"
-            name="characterName"
-            value={formData.characterName}
-            onChange={handleInputChange}
-            required
+            {...register("characterName", {
+              required: "Veuillez entrer le nom du joueur",
+              minLength: 1,
+            })}
+            isInvalid={!!errors.characterName}
           />
+          {errors.characterName && (
+            <Form.Control.Feedback type="invalid">
+              {errors.characterName.message}
+            </Form.Control.Feedback>
+          )}
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="success">
           <Form.Label>Jeu fini ?</Form.Label>
 
-          <Form.Check
-            name="success"
-            checked={formData.success}
-            onChange={handleSuccessCheckBoxChange}
-          />
+          <Form.Check {...register("success")} />
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="dateStart">
           <Form.Label>Date de début</Form.Label>
           <Form.Control
             type="date"
-            name="dateStart"
-            value={formData.dateStart}
-            onChange={handleInputChange}
-            // required
+            {...register("dateStart", {
+              required: "Veuillez entrer la date de début",
+              minLength: 1,
+            })}
+            isInvalid={!!errors.dateStart}
           />
+
+          {errors.dateStart && (
+            <Form.Control.Feedback type="invalid">
+              {errors.dateStart.message}
+            </Form.Control.Feedback>
+          )}
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3" controlId="dateEnd">
           <Form.Label>Date de fin</Form.Label>
           <Form.Control
-            disabled={!formData.success}
             type="date"
-            name="dateEnd"
-            value={formData.dateEnd}
-            onChange={handleInputChange}
+            disabled={!isDateEndRequired}
+            {...register("dateEnd", {
+              required: isDateEndRequired
+                ? "Veuillez entrer la date de fin"
+                : false,
+              minLength: 1,
+            })}
+            isInvalid={!!errors.dateEnd}
           />
+
+          {errors.dateEnd && (
+            <Form.Control.Feedback type="invalid">
+              {errors.dateEnd.message}
+            </Form.Control.Feedback>
+          )}
         </Form.Group>
 
         <Button variant="primary" type="submit">
