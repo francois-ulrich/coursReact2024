@@ -48,7 +48,7 @@ export const GameForm = (props: Props) => {
     if (!isDateEndRequired) {
       setValue("dateEnd", "");
     }
-  }, [isDateEndRequired]);
+  }, [isDateEndRequired, setValue]);
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     props.handleFormSubmit(formData);

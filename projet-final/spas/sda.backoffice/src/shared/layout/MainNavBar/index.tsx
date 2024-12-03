@@ -27,6 +27,12 @@ const MainNavBar = () => {
             <Nav.Link as={Link} to="/games">
               Games
             </Nav.Link>
+            <Nav.Link as={Link} to="/memo">
+              Memo
+            </Nav.Link>
+            <Nav.Link as={Link} to="/usecallback">
+              useCallback
+            </Nav.Link>
             {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
