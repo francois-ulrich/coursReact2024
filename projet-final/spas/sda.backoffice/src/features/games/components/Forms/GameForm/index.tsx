@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { Game, GameFormData } from "../../../models";
 import { formatStringToDateFormat } from "../../../../../util";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 interface Props {
   game?: Game;
@@ -23,7 +24,8 @@ export const GameForm = (props: Props) => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isValid },
+    setValue,
+    formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
       name: props.game ? props.game.name : "",
@@ -41,6 +43,12 @@ export const GameForm = (props: Props) => {
   });
 
   const isDateEndRequired = watch("success");
+
+  useEffect(() => {
+    if (!isDateEndRequired) {
+      setValue("dateEnd", "");
+    }
+  }, [isDateEndRequired]);
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     props.handleFormSubmit(formData);
